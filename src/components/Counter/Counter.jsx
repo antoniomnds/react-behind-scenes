@@ -28,6 +28,17 @@ function isPrime(number) {
   return true;
 }
 
+/*
+The reason why the initialCount prop does not update the component is because the useState hook
+only uses the prop value for the initial state. Any subsequent changes to the prop value will
+be ignored after the first render. This is because the state, once set, is persisted across the
+lifetime of the component (until we remove that component from our screen).
+The component can re-render as many times as it wants but the state value will be persisted,
+and consequently any changes to that prop value will not be taken into account.
+
+To update the component when the initialCount changes, the key prop should be used when
+calling this component so React un-mount and mounts the component in every initialCount change.
+ */
 export default function Counter({ initialCount }) {
   log('<Counter /> rendered', 1);
 
