@@ -35,19 +35,35 @@ export default function Counter({ initialCount }) {
   const initialCountIsPrime = useMemo(() => isPrime(initialCount), [initialCount]);
 
   // const [counter, setCounter] = useState(initialCount);
-  const [counterChanges, setCounterChanges] = useState([initialCount]);
+  const [counterChanges, setCounterChanges] = useState([{
+    id: Math.random() * 1000,
+    value: initialCount
+  }]);
 
-  const currentCounter = counterChanges.reduce((prevCounter, counterChange) => prevCounter + counterChange, 0);
+  const currentCounter = counterChanges.reduce(
+    (prevCounter, counterChange) => prevCounter + counterChange.value, 0);
 
   // useCallback used together with memo in the IconButton will avoid unnecessary re-executions
   const handleDecrement = useCallback(function handleDecrement() {
     // setCounter((prevCounter) => prevCounter - 1);
-    setCounterChanges(prevCounterChanges => [-1, ...prevCounterChanges]);
+    setCounterChanges(prevCounterChanges => [
+      {
+        id: Math.random() * 1000,
+        value: -1
+      },
+      ...prevCounterChanges
+    ]);
   }, []);
 
   const handleIncrement = useCallback(function handleIncrement() {
     // setCounter((prevCounter) => prevCounter + 1);
-    setCounterChanges(prevCounterChanges => [1, ...prevCounterChanges]);
+    setCounterChanges(prevCounterChanges => [
+      {
+        id: Math.random() * 1000,
+        value: 1
+      },
+      ...prevCounterChanges
+    ]);
   }, []);
 
   return (
